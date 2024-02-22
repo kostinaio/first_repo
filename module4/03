@@ -1,0 +1,34 @@
+sodef get_grade(key):
+    grade = {
+    "F": 1,
+    "X": 2,
+    "E": 3,
+    "D": 3,
+    "C": 4,
+    "B": 5,
+    "A": 5  
+    }
+    if key in grade:
+        return  grade.get(key)
+    else:
+        return "Invalid key"
+    
+
+def get_description(key):
+    description = {
+    "F": "Unsatisfactorily",
+    "X": "Unsatisfactorily",
+    "E": "Enough",
+    "D": "Satisfactorily",
+    "C": "Good",
+    "B": "Very good",
+    "A": "Perfectly"  
+    }
+    if key in description:
+        return  description.get(key)
+    else:
+        return "Invalid key"
+    
+print(get_grade("A"))
+print(get_description("B"))
+print(get_description("Z"))

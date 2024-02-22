@@ -1,0 +1,73 @@
+# def first(size, *args):
+#     count = len(args)
+#     result = size + count
+#     print (result)
+
+# first (1,'a','b','ded',5)
+    
+# def second(size,**kwargs):
+#     count = len(kwargs)
+#     result = size + count
+#     print (result)
+
+# second (2, key1=4, key2=4100, key3='aa', key4='b')
+
+
+def cost_delivery(quantity, *_, discount=0): 
+   """Функція повертає суму за доставлення замовлення.
+   Перший параметр &quantity; кількість товарів в замовленні.
+   Параметр знижки discount, який передається лише як ключовий, за замовчуванням має значення 0."""    
+   result = (5 + 2 * (quantity - 1)) * (1 - discount)
+   return result
+
+print(cost_delivery.__doc__)
+
+
+from collections import defaultdict
+from datetime import datetime
+
+def get_birthdays_per_week(users):
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    birthdays_per_week = defaultdict(list)
+    today = datetime.today().date() # Отримання поточної дати
+
+    # Перебір користувачів
+    for user in users:
+        name = user["name"]
+        birthday = user["birthday"]
+        
+        if isinstance(birthday, str):  # Перевірка, чи дата народження представлена у рядковому форматі
+            birthday_date = datetime.strptime(birthday, "%d/%m/%Y %H:%M").date()  # Конвертація до типу date
+        else:
+            birthday_date = birthday.date()
+        
+        birthday_this_year = birthday_date.replace(year=today.year)
+        if birthday_this_year < today:
+            birthday_this_year = birthday_this_year.replace(year=today.year + 1) # Оцінка дати на рік
+        
+        delta_days = (birthday_this_year - today).days  # Порівняння з поточною датою
+        
+        # Визначення дня тижня
+        if delta_days < 7:
+            day_of_week = birthday_this_year.strftime("%A")
+            if day_of_week == 'Saturday' or day_of_week == 'Sunday':
+                day_of_week = 'Monday'  # Привітати в понеділок, якщо вихідний
+            birthdays_per_week[day_of_week].append(name)
+
+    for day in weekdays:
+        if birthdays_per_week[day]:
+            print(f"{day}: {', '.join(birthdays_per_week[day])}")
+
+# Приклад використання:
+users = [
+    {"name": "Anna", "birthday": "27/02/2000 10:15"},
+    {"name": "Den", "birthday": "23/02/1995 10:20"},
+    {"name": "Katrin", "birthday": "25/02/2000"},
+    {"name": "Andrii", "birthday": "29/02/2000"}
+]
+
+get_birthdays_per_week(users)
+
+# Приклад з об'єктом datetime:
+bill_gates = {"name": "Bill Gates", "birthday": datetime(1955, 10, 28)}
+get_birthdays_per_week([bill_gates])

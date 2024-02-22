@@ -1,0 +1,21 @@
+def lookup_key(data, value):
+    result_keys = []
+    for key in data.keys():
+        if data[key] == value:
+            result_keys.append(key)
+    return result_keys
+
+
+
+def formatted_numbers():
+    result = []
+    result.append("|{:>10}|{:^10}|{:^10}|".format('decimal','hex','binary'))
+    
+    for i in range(16):
+        el = "|{:<10}|{:^10}|{:>10}|".format(i, hex(i)[2:], bin(i)[2:])
+        result.append(el)
+    
+    return result
+
+for line in formatted_numbers():
+    print(line)
